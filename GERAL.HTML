@@ -1,0 +1,203 @@
+<style>
+  /* Modal fullscreen */
+  .modal {
+    display: block; /* já aberto */
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.5);
+    z-index: 9999;
+    overflow: hidden; /* evita rolagem na página de fundo */
+  }
+
+  .modal-content {
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 20px;
+  }
+
+  .modal-header {
+    display: flex;
+    justify-content: center; /* centraliza o título */
+    align-items: center;
+    flex-shrink: 0;
+    position: relative;
+  }
+
+  .modal-header h3 {
+    margin: 0;
+    font-size: 1.8rem;
+    color: #003366;
+    text-align: center;
+  }
+
+  .modal-header .btn-container {
+    position: absolute;
+    right: 0;
+    display: flex;
+    gap: 10px;
+  }
+
+  .btn-imprimir {
+    padding: 6px 12px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .btn-imprimir:hover {
+    background: #0056b3;
+  }
+
+  .table-container {
+    flex-grow: 1;
+    overflow: auto; /* scroll só dentro da tabela */
+    margin-top: 15px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+    overflow-wrap: break-word;
+    white-space: normal;
+  }
+
+  thead {
+    background: #003366;
+    color: white;
+  }
+
+  th.pos { width: 6%; }
+  th.competidor { width: 40%; }
+  th.cidade { width: 28%; }
+  th.etapas { width: 10%; }
+  th.total { width: 16%; }
+
+  /* Destaque por posição com cores suaves */
+  .pos1-3 { background-color: #FFF5B1; } /* dourado suave */
+  .pos4-10 { background-color: #D8E4F0; } /* azul claro */
+  .pos11-20 { background-color: #F9E0D9; } /* laranja suave */
+</style>
+
+<div class="modal" id="modalRanking">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>🏆 CLASSIFICAÇÃO GERAL LIGA SOLO 2026</h3>
+      <div class="btn-container">
+              </div>
+    </div>
+    <div class="table-container">
+      <table id="rankingTable">
+        <thead>
+          <tr>
+            <th class="pos">Pos.</th>
+            <th class="competidor">Competidor</th>
+            <th class="cidade">Cidade</th>
+            <th class="etapas">Etapas</th>
+            <th class="total">Total (cm)</th>
+          </tr>
+        </thead>
+        <tbody id="rankingBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+  const rankingDados = [
+    { pos: "1º", competidor: "Roni Gaucho", cidade: "São José Rio Preto - SP", etapas: 2, total: 451.0 },
+    { pos: "2º", competidor: "Zé Leonardo", cidade: "Monte Azul - SP", etapas: 2, total: 439.0 },
+    { pos: "3º", competidor: "Celo Ramos", cidade: "Americana - SP", etapas: 2, total: 422.0 },
+    { pos: "4º", competidor: "Fernando Wolverine", cidade: "São Caetano do Sul - SP", etapas: 2, total: 418.5 },
+    { pos: "5º", competidor: "Hipólito", cidade: "Olímpia - SP", etapas: 2, total: 412.0 },
+    { pos: "6º", competidor: "Léo", cidade: "Barretos - SP", etapas: 2, total: 410.5 },
+    { pos: "7º", competidor: "Cesinha", cidade: "Mirassôlandia - SP", etapas: 2, total: 408.5 },
+    { pos: "8º", competidor: "Cícero", cidade: "Frutal - MG", etapas: 2, total: 406.0 },
+    { pos: "9º", competidor: "Dieguinho", cidade: "Planura - MG", etapas: 2, total: 405.0 },
+    { pos: "10º", competidor: "Rafa Luauto", cidade: "Viradouro - SP", etapas: 2, total: 401.0 },
+    { pos: "11º", competidor: "Walnnin", cidade: "Bebedouro - SP", etapas: 2, total: 398.0 },
+    { pos: "12º", competidor: "Tulio", cidade: "Franca - SP", etapas: 2, total: 392.5 },
+    { pos: "13º", competidor: "Hebert", cidade: "Barretos - SP", etapas: 2, total: 383.5 },
+    { pos: "14º", competidor: "Emerson", cidade: "Bebedouro - SP", etapas: 2, total: 382.0 },
+    { pos: "15º", competidor: "Dener", cidade: "Barretos - SP", etapas: 2, total: 374.0 },
+    { pos: "16º", competidor: "Thiago Papa", cidade: "Uberaba - MG", etapas: 2, total: 369.5 },
+    { pos: "17º", competidor: "Edilson Machado", cidade: "Franca - SP", etapas: 2, total: 363.5 },
+    { pos: "18º", competidor: "Moacyr Braido", cidade: "Barretos - SP", etapas: 2, total: 358.0 },
+    { pos: "19º", competidor: "Mateus Rodrigues", cidade: "Frutal - MG", etapas: 2, total: 350.5 },
+    { pos: "20º", competidor: "Cássio", cidade: "Viradouro - SP", etapas: 2, total: 320.5 },
+    { pos: "21º", competidor: "Mateus Cirqueira", cidade: "Bebedouro - SP", etapas: 2, total: 316.0 },
+    { pos: "22º", competidor: "Matheus Santos", cidade: "Bebedouro - SP", etapas: 2, total: 304.5 },
+    { pos: "23º", competidor: "Getúlio", cidade: "Frutal - MG", etapas: 2, total: 274.5 },
+    { pos: "24º", competidor: "Murilo Ribeiro", cidade: "Barretos - SP", etapas: 1, total: 228.5 },
+    { pos: "25º", competidor: "Cesinha Marques", cidade: "Barretos - SP", etapas: 1, total: 221.5 },
+    { pos: "26º", competidor: "Luan", cidade: "Franca - SP", etapas: 1, total: 215.0 },
+    { pos: "27º", competidor: "Quiarato", cidade: "Catanduva - SP", etapas: 2, total: 199.5 },
+    { pos: "28º", competidor: "Leandro Aranha", cidade: "Franca - SP", etapas: 1, total: 191.0 },
+    { pos: "29º", competidor: "Igor Ribeiro", cidade: "Barretos - SP", etapas: 1, total: 187.5 },
+    { pos: "30º", competidor: "Alex Help", cidade: "Bebedouro - SP", etapas: 2, total: 186.0 },
+    { pos: "31º", competidor: "Felipe Sita", cidade: "Bebedouro - SP", etapas: 2, total: 185.0 },
+    { pos: "32º", competidor: "Rafa Mazza", cidade: "Franca - SP", etapas: 2, total: 182.0 },
+    { pos: "33º", competidor: "Jorge", cidade: "Ribeirão Preto - SP", etapas: 2, total: 180.5 },
+    { pos: "34º", competidor: "Vitor Lambert", cidade: "Barretos - SP", etapas: 1, total: 180.0 },
+    { pos: "35º", competidor: "Marquinhos Marquezini", cidade: "Sertãozinho - SP", etapas: 1, total: 158.5 },
+    { pos: "36º", competidor: "Juninho Bill", cidade: "Franca - SP", etapas: 1, total: 156.0 },
+    { pos: "37º", competidor: "Diego Ribeiro", cidade: "Bebedouro - SP", etapas: 1, total: 154.5 },
+    { pos: "38º", competidor: "Thiagão Sodpesca", cidade: "Pirangi", etapas: 2, total: 146.5 },
+    { pos: "39º", competidor: "Daniel", cidade: "Uberaba - MG", etapas: 1, total: 83.0 },
+    { pos: "40º", competidor: "Glauber", cidade: "Uberaba - MG", etapas: 2, total: 0.0 },
+    { pos: "41º", competidor: "Henrique Favaro", cidade: "Bebedouro - SP", etapas: 1, total: 0.0 },
+    { pos: "42º", competidor: "Leandro Pedroso", cidade: "Frutal - MG", etapas: 1, total: 0.0 },
+    { pos: "43º", competidor: "Mateus Calve", cidade: "Cajobi - SP", etapas: 1, total: 0.0 },
+    { pos: "44º", competidor: "Renato Ceron", cidade: "São José Rio Preto - SP", etapas: 1, total: 0.0 },
+    { pos: "45º", competidor: "Thiago Coscrato", cidade: "Guaíra - SP", etapas: 1, total: 0.0 }
+  ];
+
+  function popularRanking() {
+    const tbody = document.getElementById("rankingBody");
+    tbody.innerHTML = "";
+    rankingDados.forEach((item, index) => {
+      const tr = document.createElement("tr");
+
+      if(index <= 2) tr.classList.add("pos1-3");
+      else if(index <= 9) tr.classList.add("pos4-10");
+      else if(index <= 19) tr.classList.add("pos11-20");
+
+      tr.innerHTML = `<td>${item.pos}</td><td>${item.competidor}</td><td>${item.cidade}</td><td>${item.etapas}</td><td>${item.total.toFixed(1)}</td>`;
+      tbody.appendChild(tr);
+    });
+  }
+
+  function fecharModal() {
+    document.getElementById("modalRanking").style.display = "none";
+  }
+
+  function imprimirModal() {
+    const conteudo = document.querySelector("#modalRanking .modal-content").innerHTML;
+    const janela = window.open('', '', 'width=900,height=700');
+    janela.document.write('<html><head><title>Imprimir Ranking Profissional</title>');
+    janela.document.write('<style>body{font-family: Arial, sans-serif; padding:20px;} table {width:100%; border-collapse: collapse;} th, td {border:1px solid #000; padding:8px; text-align:left;} thead {background:#003366; color:#fff;} </style>');
+    janela.document.write('</head><body>');
+    janela.document.write(conteudo);
+    janela.document.write('</body></html>');
+    janela.document.close();
+    janela.focus();
+    janela.print();
+    janela.close();
+  }
+
+  popularRanking();
+</script>
