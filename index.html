@@ -73,17 +73,7 @@ button.voltar:hover { background:#0284c7; }
   <button class="voltar" onclick="voltarMenu()">⬅ Voltar ao menu</button>
 </div>
 
-<script>
-function abrirPagina(id) {
-  document.querySelectorAll('.page').forEach(p => p.style.display='none');
-  document.querySelector('.menu').style.display='none';
-  document.getElementById(id).style.display='block';
-}
-function voltarMenu() {
-  document.querySelectorAll('.page').forEach(p => p.style.display='none');
-  document.querySelector('.menu').style.display='flex';
-}
-</script>
+
 
 </body>
 </html>
