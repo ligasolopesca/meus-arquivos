@@ -5,10 +5,11 @@
 <meta charset="UTF-8">
 <title>4° Liga Solo 2026</title>
 
-<style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<style>
 body{
-  font-family:Arial;
+  font-family:Arial, sans-serif;
   margin:0;
   background:#0f172a;
   color:white;
@@ -20,6 +21,12 @@ header{
   background:#020617;
 }
 
+header h1{
+  font-size:2em;
+  color:#0ea5e9;
+}
+
+/* Menu principal */
 .menu{
   padding:30px;
 }
@@ -29,16 +36,17 @@ header{
   background:#0ea5e9;
   color:white;
   text-decoration:none;
-  padding:15px;
-  margin:10px auto;
+  padding:20px 25px;
+  margin:12px auto;
   width:300px;
   border-radius:8px;
-  font-size:18px;
-  transition: background 0.3s;
+  font-size:22px;
+  transition: background 0.3s, transform 0.2s;
 }
 
 .menu a:hover{
   background:#0284c7;
+  transform:scale(1.03);
 }
 
 /* Patrocinadores */
@@ -72,6 +80,14 @@ header{
   transform:scale(1.1);
 }
 
+/* Responsivo para celular */
+@media (max-width:600px){
+  .menu a{
+    font-size:20px;
+    width:90%;
+    padding:18px 20px;
+  }
+}
 </style>
 
 </head>
@@ -84,6 +100,7 @@ header{
 
 <div class="menu">
 
+<!-- Etapas e Classificação -->
 <a href="fazer.pdf" target="_blank">
 1º ETAPA LIGA SOLO - 31/01/2026
 </a>
