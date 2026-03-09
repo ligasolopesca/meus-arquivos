@@ -1,98 +1,70 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
 <meta charset="UTF-8">
 <title>4° Liga Solo 2026</title>
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <style>
-* { box-sizing: border-box; margin:0; padding:0; }
-body { font-family:'Arial', sans-serif; background:#0f172a; color:#f8f8f8; line-height:1.6; }
-header { background:#020617; padding:30px; text-align:center; box-shadow:0 4px 10px rgba(0,0,0,0.4); }
-header h1 { font-size:2em; color:#0ea5e9; }
 
-.menu { display:flex; flex-direction:column; align-items:center; padding:20px; }
-.menu button, .menu a {
-  background:#0ea5e9; color:white; border:none; border-radius:8px; padding:15px 25px;
-  margin:10px 0; font-size:18px; cursor:pointer; width:90%; max-width:350px;
-  transition: background 0.3s, transform 0.2s; text-decoration:none; text-align:center;
-}
-.menu button:hover, .menu a:hover { background:#0284c7; transform:scale(1.03); }
-
-.page { display:none; padding:20px; text-align:center; animation:fadeIn 0.5s; }
-
-@keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
-
-iframe /* novo */
-#geral iframe {
-  width: 95%;
-  max-width: 1000px;
-  height: 80vh; /* ocupa 80% da altura da tela do dispositivo */
-  border: none;
-  border-radius: 10px;
-  margin-top: 20px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+body{
+font-family:Arial;
+margin:0;
+background:#0f172a;
+color:white;
+text-align:center;
 }
 
-button.voltar { margin-top:20px; padding:12px 20px; font-size:16px; border:none; border-radius:8px; background:#0ea5e9; color:white; cursor:pointer; transition: background 0.3s; }
-button.voltar:hover { background:#0284c7; }
+header{
+padding:30px;
+background:#020617;
+}
 
-.patrocinio { margin-top:40px; text-align:center; }
-.patrocinio h3 { color:#ffd700; margin-bottom:15px; font-size:1.5em; }
-.logos { display:flex; justify-content:center; flex-wrap:wrap; gap:20px; }
-.logos img { width:120px; height:auto; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.5); transition: transform 0.3s; }
-.logos img:hover { transform:scale(1.1); }
+.menu{
+padding:30px;
+}
 
-@media(max-width:600px) { iframe{height:500px;} .menu button{font-size:16px;} }
+.menu a{
+display:block;
+background:#0ea5e9;
+color:white;
+text-decoration:none;
+padding:15px;
+margin:10px auto;
+width:300px;
+border-radius:8px;
+font-size:18px;
+}
+
+.menu a:hover{
+background:#0284c7;
+}
+
 </style>
+
 </head>
 
 <body>
 
 <header>
-<h1>4° LIGA SOLO 2026</h1>
+<h1>4° Liga Solo 2026</h1>
 </header>
 
-<!-- Menu Principal -->
 <div class="menu">
-  <!-- PDFs abrem em nova aba -->
-  <a href="fazer.pdf" target="_blank">1º ETAPA LIGA SOLO - 31/01/2026</a>
-  <a href="etapa2.pdf" target="_blank">2º ETAPA LIGA SOLO - 07/03/2026</a>
-  
-  <!-- HTML interno ainda com botão voltar -->
-  <button onclick="abrirPagina('geral')">CLASSIFICAÇÃO GERAL</button>
 
-  <!-- Patrocinadores -->
-  <div class="patrocinio">
-    <h3>Patrocinadores</h3>
-    <div class="logos">
-      <img src="logo1.png" alt="Patrocinador 1">
-      <img src="logo2.png" alt="Patrocinador 2">
-      <img src="logo3.png" alt="Patrocinador 3">
-    </div>
-  </div>
+<a href="fazer.pdf" target="_blank">
+1º ETAPA LIGA SOLO - 31/01/2026
+</a>
+
+<a href="etapa2.pdf" target="_blank">
+2º ETAPA LIGA SOLO - 07/03/2026
+</a>
+
+<a href="geral.html" target="_blank">
+CLASSIFICAÇÃO GERAL
+</a>
+
 </div>
-
-<!-- Seção interna: Classificação Geral -->
-<div id="geral" class="page">
-  <h2>Classificação Geral</h2>
-  <iframe src="geral.html"></iframe>
-  <br>
-  <button class="voltar" onclick="voltarMenu()">⬅ Voltar ao menu</button>
-</div>
-
-<script>
-function abrirPagina(id) {
-  document.querySelectorAll('.page').forEach(p => p.style.display='none');
-  document.querySelector('.menu').style.display='none';
-  document.getElementById(id).style.display='block';
-}
-function voltarMenu() {
-  document.querySelectorAll('.page').forEach(p => p.style.display='none');
-  document.querySelector('.menu').style.display='flex';
-}
-</script>
 
 </body>
 </html>
